@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: myclient
+logging:
+  level:
+    root: info
+eureka:
+  instance:
+    initialStatus: STARTING
+  client:
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    #onDemandUpdateStatusChange: false
+    #register-with-eureka: false
+    #fetchRegistry: false
+    #nonSecurePort: 0
+    service-url:
+      defaultZone: http://localhost:8080/eureka/
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+     web:
+       exposure:
+          include: '*'
+test:
+  param: test003
