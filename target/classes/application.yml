@@ -1,12 +1,18 @@
 spring:
   application:
     name: myclient
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
 logging:
   level:
     root: info
 eureka:
   instance:
-    initialStatus: STARTING
+    prefer-ip-address: true
   client:
     initialInstanceInfoReplicationIntervalSeconds: 5
     #onDemandUpdateStatusChange: false
@@ -15,14 +21,18 @@ eureka:
     #nonSecurePort: 0
     service-url:
       defaultZone: http://localhost:8080/eureka/
-
+mq:
+  queue: demo_01
 server:
-  port: 8080
+  port: 8020
 
 management:
-  endpoints:
+  #server:
+    #port: 8011
      web:
        exposure:
           include: '*'
+endpoints:
+  sensitive: false
 test:
   param: test003

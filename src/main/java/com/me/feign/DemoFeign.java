@@ -1,3 +1,4 @@
+/*
 package com.me.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -9,3 +10,4 @@ public interface DemoFeign {
     @GetMapping("/demo1/get")
     public String get(@RequestParam  String msg);
 }
+*/

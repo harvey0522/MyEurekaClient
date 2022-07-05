@@ -9,11 +9,6 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
-import org.springframework.boot.web.context.WebServerApplicationContext;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.cloud.context.scope.GenericScope;
-import org.springframework.cloud.context.scope.refresh.RefreshScopeRefreshedEvent;
-import org.springframework.cloud.endpoint.event.RefreshEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -33,18 +30,19 @@ public class DemoController {
     @Autowired
     ApplicationContext applicationContext;
 
-    @Autowired
-    GenericScope genericScope;
+    ThreadLocal local=new ThreadLocal();
 
-    @GetMapping("/demo/get/{msg}")
-    public String get(@PathVariable("msg") String msg){
+    List<Long> list=new ArrayList<>();
+
+    @GetMapping("/test/get/{msg}")
+    public String get(@PathVariable String msg){
         log.info("param:{}",test);
-
-        genericScope.remove("scopedTarget.eurekaClient");
-
-        applicationContext.publishEvent(new RefreshEvent(test,null,null));
+        long l = System.currentTimeMillis();
+        list.add(l);
+        local.set(list);
+       // applicationContext.publishEvent(new RefreshEvent(test,null,null));
         log.info("person:{}",person);
-        return test;
+        return test+msg;
     }
 
     @Autowired
